@@ -354,7 +354,7 @@ void close_serial_port_2(const serial_port sp, const bool restore_termios) {
 
 int open_serial_port_3() {
 	int fd;
-	fd = open("/dev/ttyAMA0", O_RDWR);
+	fd = open("/dev/ttyAMA0", O_RDWR| O_NOCTTY | O_NONBLOCK);
 	return fd;
 }
 void set_serial_port_3(int fd) {
@@ -364,6 +364,7 @@ int read_serial_port_3(int fd){
 	int read_output=-1;
 	void *buf;
 	do{
+
 	read_output = read(fd, buf, sizeof(buf));
 	} while (read_output <0);
 	printf("Buffer %s", (char *)buf);
